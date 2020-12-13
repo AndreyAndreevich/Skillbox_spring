@@ -1,11 +1,14 @@
 package org.example.web.controllers;
 
+import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.example.app.services.BookService;
 import org.example.web.dto.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +35,13 @@ public class BookShelfController {
     }
 
     @PostMapping("/save")
-    public String saveBook(Book book) {
-        bookService.saveBook(book);
-        logger.info("current repository size: " + bookService.getAllBooks().size());
+    public String saveBook(@Valid Book book, BindingResult result) {
+        if (!result.hasErrors()) {
+            bookService.saveBook(book);
+            logger.info("current repository size: " + bookService.getAllBooks().size());
+        } else {
+            logger.warn(result.getAllErrors());
+        }
         return "redirect:/books/shelf";
     }
 
