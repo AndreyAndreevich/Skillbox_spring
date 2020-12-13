@@ -40,10 +40,9 @@ public class BookShelfController {
 
     @PostMapping("/remove")
     public String removeBook(@RequestParam(value = "bookIdToRemove") Integer bookIdToRemove) {
-        if (bookService.removeBookById(bookIdToRemove)) {
-            return "redirect:/books/shelf";
-        } else {
-            return "book_shelf";
+        if (!bookService.removeBookById(bookIdToRemove)) {
+            logger.warn("book with id \"" + bookIdToRemove + "\" not found:");
         }
+        return "redirect:/books/shelf";
     }
 }
