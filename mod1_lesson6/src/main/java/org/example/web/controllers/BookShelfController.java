@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/books")
@@ -46,9 +45,12 @@ public class BookShelfController {
     }
 
     @PostMapping("/remove")
-    public String removeBook(@RequestParam(value = "bookIdToRemove") Integer bookIdToRemove) {
-        if (!bookService.removeBookById(bookIdToRemove)) {
-            logger.warn("book with id \"" + bookIdToRemove + "\" not found:");
+    public String removeBook(Book book) {
+        if (book.getId() == null && book.getAuthor().isEmpty() &&
+            book.getTitle().isEmpty() && book.getSize() == null) {
+            logger.warn("empty book");
+        } else if (!bookService.remove(book)) {
+            logger.warn("book: " + book + " not found:");
         }
         return "redirect:/books/shelf";
     }
