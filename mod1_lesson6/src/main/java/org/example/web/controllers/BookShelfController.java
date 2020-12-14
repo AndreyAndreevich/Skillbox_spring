@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/books")
 public class BookShelfController {
 
-    private Logger logger = Logger.getLogger(BookShelfController.class);
-    private BookService bookService;
+    private final Logger logger = Logger.getLogger(BookShelfController.class);
+    private final BookService bookService;
 
     @Autowired
     public BookShelfController(BookService bookService) {
