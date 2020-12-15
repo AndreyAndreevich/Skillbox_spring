@@ -1,5 +1,9 @@
 package org.example.web.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -26,10 +30,26 @@ public class BookShelfController {
     }
 
     @GetMapping("/shelf")
-    public String books(Model model) {
+    public String books(Model model, String author, String title, Integer size) {
         logger.info("got book shelf");
+        logger.info("filter books by" + author + " " + title + " " + size);
+
+        List<Book> books = bookService.getAllBooks();
+        Stream<Book> stream = books.stream();
+
+        if (author != null && !author.isEmpty()) {
+            stream = stream.filter(book -> book.getAuthor().startsWith(author));
+        }
+        if (title != null && !title.isEmpty()) {
+            stream = stream.filter(book -> book.getTitle().startsWith(title));
+        }
+        if (size != null) {
+            stream = stream.filter(book -> book.getSize().equals(size));
+        }
+
         model.addAttribute("book", new Book());
-        model.addAttribute("bookList", bookService.getAllBooks());
+        model.addAttribute("bookList", stream.collect(Collectors.toList()));
+
         return "book_shelf";
     }
 

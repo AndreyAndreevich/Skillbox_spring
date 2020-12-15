@@ -74,12 +74,32 @@
 
 
     <table id="books">
+        <thead>
         <tr>
             <th>id</th>
             <th>author</th>
             <th>title</th>
             <th>size</th>
         </tr>
+        <form method="get" th:action="@{/books/shelf}">
+            <tr>
+                <td/>
+                <td>
+                    <input type="text" placeholder="author" name="author">
+                </td>
+                <td>
+                    <input type="text" placeholder="title" name="title">
+                </td>
+                <td>
+                    <input type="text" placeholder="size" name="size">
+                </td>
+                <td>
+                    <input type="submit" value="filter">
+                </td>
+            </tr>
+        </form>
+        </thead>
+
         <tr th:each="book : ${bookList}">
             <td th:text="${book.id}"></td>
             <td th:text="${book.author}"></td>
