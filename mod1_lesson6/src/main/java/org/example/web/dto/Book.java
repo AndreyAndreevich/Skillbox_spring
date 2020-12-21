@@ -1,9 +1,18 @@
 package org.example.web.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Book {
     private Integer id;
+
+    @NotBlank
     private String author;
+
+    @NotBlank
     private String title;
+
+    @NotNull
     private Integer size;
 
     public Integer getId() {
@@ -41,10 +50,10 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", size=" + size +
-                '}';
+            "id=" + id +
+            ", author='" + author + '\'' +
+            ", title='" + title + '\'' +
+            ", size=" + size +
+            '}';
     }
 }

@@ -1,10 +1,10 @@
 package org.example.app.services;
 
+import java.util.List;
+
 import org.example.web.dto.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class BookService {
@@ -24,7 +24,18 @@ public class BookService {
         bookRepo.store(book);
     }
 
-    public boolean removeBookById(Integer bookIdToRemove) {
-        return bookRepo.removeItemById(bookIdToRemove);
+    public boolean remove(Book book) {
+        return bookRepo.remove(el -> {
+            if (book.getId() != null && !book.getId().equals(el.getId())) {
+                return false;
+            }
+            if (!book.getAuthor().isEmpty() && !book.getAuthor().equals(el.getAuthor())) {
+                return false;
+            }
+            if (!book.getTitle().isEmpty() && !book.getTitle().equals(el.getTitle())) {
+                return false;
+            }
+            return book.getSize() == null || book.getSize().equals(el.getSize());
+        });
     }
 }

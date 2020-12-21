@@ -1,11 +1,12 @@
 package org.example.app.services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 import org.apache.log4j.Logger;
 import org.example.web.dto.Book;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class BookRepository implements ProjectRepository<Book> {
@@ -26,13 +27,13 @@ public class BookRepository implements ProjectRepository<Book> {
     }
 
     @Override
-    public boolean removeItemById(Integer bookIdToRemove) {
-        for (Book book : retreiveAll()) {
-            if (book.getId().equals(bookIdToRemove)) {
+    public boolean remove(Predicate<Book> predicate) {
+        return repo.removeIf(book -> {
+            if (predicate.test(book)) {
                 logger.info("remove book completed: " + book);
-                return repo.remove(book);
+                return true;
             }
-        }
-        return false;
+            return false;
+        });
     }
 }
