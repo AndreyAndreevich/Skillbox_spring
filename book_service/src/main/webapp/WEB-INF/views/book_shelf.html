@@ -46,11 +46,14 @@
                 <td>
                     <input type="submit" value="save">
                 </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p>Wrong object for saving</p>
+                </td>
             </tr>
         </table>
     </form>
 
-    <form method="post" th:action="@{/books/remove}" th:object="${book}">
+    <form method="post" th:action="@{/books/remove}" th:object="${bookToRemove}">
         <table>
             <tr>
                 <td>
@@ -67,6 +70,9 @@
                 </td>
                 <td>
                     <input type="submit" value="remove">
+                </td>
+                <td th:if="${#fields.hasErrors()}">
+                    <p>Wrong object for deleting</p>
                 </td>
             </tr>
         </table>

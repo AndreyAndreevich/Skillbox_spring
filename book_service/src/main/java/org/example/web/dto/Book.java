@@ -3,16 +3,18 @@ package org.example.web.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.example.web.validation.SaveGroup;
+
 public class Book {
     private Integer id;
 
-    @NotBlank
+    @NotBlank(groups = SaveGroup.class)
     private String author;
 
-    @NotBlank
+    @NotBlank(groups = SaveGroup.class)
     private String title;
 
-    @NotNull
+    @NotNull(groups = SaveGroup.class)
     private Integer size;
 
     public Integer getId() {
