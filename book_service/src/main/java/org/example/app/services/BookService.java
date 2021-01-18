@@ -25,17 +25,6 @@ public class BookService {
     }
 
     public boolean remove(Book book) {
-        return bookRepo.remove(el -> {
-            if (book.getId() != null && !book.getId().equals(el.getId())) {
-                return false;
-            }
-            if (!book.getAuthor().isEmpty() && !book.getAuthor().equals(el.getAuthor())) {
-                return false;
-            }
-            if (!book.getTitle().isEmpty() && !book.getTitle().equals(el.getTitle())) {
-                return false;
-            }
-            return book.getSize() == null || book.getSize().equals(el.getSize());
-        });
+        return bookRepo.remove(book);
     }
 }

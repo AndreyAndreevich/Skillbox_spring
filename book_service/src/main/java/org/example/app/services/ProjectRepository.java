@@ -1,12 +1,13 @@
 package org.example.app.services;
 
 import java.util.List;
-import java.util.function.Predicate;
+
+import org.example.web.dto.Book;
 
 public interface ProjectRepository<T> {
     List<T> retreiveAll();
 
     void store(T book);
 
-    boolean remove(Predicate<T> predicate);
+    boolean remove(Book bookToRemove);
 }
