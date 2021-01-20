@@ -116,7 +116,15 @@ public class BookShelfController {
     }
 
     @PostMapping("/uploadFile")
-    public String uploadFile(@RequestParam("file")MultipartFile file) throws Exception {
+    public String uploadFile(@RequestParam("file") @Valid MultipartFile file) throws Exception {
+
+        if (file.getOriginalFilename().isEmpty()) {
+            logger.warn("file is empty");
+            return "redirect:/books/shelf";
+        }
+
+        logger.info("new file: " + file.getOriginalFilename());
+
         String name = file.getOriginalFilename();
         byte[] bytes = file.getBytes();
 
