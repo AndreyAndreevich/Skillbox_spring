@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.example.app.services.BookService;
 import org.example.web.dto.Book;
+import org.example.web.dto.BookToFilter;
 import org.example.web.dto.BookToRemove;
 import org.example.web.validation.SaveGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,25 +39,37 @@ public class BookShelfController {
     }
 
     @GetMapping("/shelf")
-    public String books(Model model, String author, String title, Integer size) {
+    public String books(Model model, BookToFilter bookToFilter, BindingResult result) {
+        if (result.hasErrors()) {
+            logger.warn(result.getAllErrors());
+
+            model.addAttribute("book", new Book());
+            model.addAttribute("bookToRemove", new BookToRemove());
+            model.addAttribute("bookList", bookService.getAllBooks());
+
+            return "book_shelf";
+        }
+
         logger.info("got book shelf");
-        logger.info("filter books by" + author + " " + title + " " + size);
+        logger.info("filter books by: " + bookToFilter.getAuthor() + " " + bookToFilter.getTitle()
+            + " " + bookToFilter.getSize());
 
         List<Book> books = bookService.getAllBooks();
         Stream<Book> stream = books.stream();
 
-        if (author != null && !author.isEmpty()) {
-            stream = stream.filter(book -> book.getAuthor().startsWith(author));
+        if (bookToFilter.getAuthor() != null && !bookToFilter.getAuthor().isEmpty()) {
+            stream = stream.filter(book -> book.getAuthor().startsWith(bookToFilter.getAuthor()));
         }
-        if (title != null && !title.isEmpty()) {
-            stream = stream.filter(book -> book.getTitle().startsWith(title));
+        if (bookToFilter.getTitle() != null && !bookToFilter.getTitle().isEmpty()) {
+            stream = stream.filter(book -> book.getTitle().startsWith(bookToFilter.getTitle()));
         }
-        if (size != null) {
-            stream = stream.filter(book -> book.getSize().equals(size));
+        if (bookToFilter.getSize() != null) {
+            stream = stream.filter(book -> book.getSize().equals(bookToFilter.getSize()));
         }
 
         model.addAttribute("book", new Book());
         model.addAttribute("bookToRemove", new BookToRemove());
+        model.addAttribute("bookToFilter", new BookToFilter());
         model.addAttribute("bookList", stream.collect(Collectors.toList()));
 
         return "book_shelf";
@@ -68,6 +81,7 @@ public class BookShelfController {
             logger.warn(result.getAllErrors());
 
             model.addAttribute("bookToRemove", new BookToRemove());
+            model.addAttribute("bookToFilter", new BookToFilter());
             model.addAttribute("bookList", bookService.getAllBooks());
 
             return "book_shelf";
@@ -85,6 +99,7 @@ public class BookShelfController {
             logger.warn(result.getAllErrors());
 
             model.addAttribute("book", new Book());
+            model.addAttribute("bookToFilter", new BookToFilter());
             model.addAttribute("bookList", bookService.getAllBooks());
 
             return "book_shelf";
