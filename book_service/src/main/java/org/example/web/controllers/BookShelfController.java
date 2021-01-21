@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.example.app.services.BookService;
-import org.example.app.services.FileStorage;
+import org.example.app.services.FileRepository;
 import org.example.web.dto.Book;
 import org.example.web.dto.BookToFilter;
 import org.example.web.dto.BookToRemove;
@@ -34,12 +34,12 @@ public class BookShelfController {
 
     private final Logger logger = Logger.getLogger(BookShelfController.class);
     private final BookService bookService;
-    private final FileStorage fileStorage;
+    private final FileRepository fileRepository;
 
     @Autowired
-    public BookShelfController(BookService bookService, FileStorage fileStorage) {
+    public BookShelfController(BookService bookService, FileRepository fileRepository) {
         this.bookService = bookService;
-        this.fileStorage = fileStorage;
+        this.fileRepository = fileRepository;
     }
 
     @GetMapping("/shelf")
@@ -50,7 +50,7 @@ public class BookShelfController {
             model.addAttribute("book", new Book());
             model.addAttribute("bookToRemove", new BookToRemove());
             model.addAttribute("bookList", bookService.getAllBooks());
-            model.addAttribute("files", fileStorage.getAllFiles());
+            model.addAttribute("files", fileRepository.getAllFiles());
 
             return "book_shelf";
         }
@@ -76,7 +76,7 @@ public class BookShelfController {
         model.addAttribute("bookToRemove", new BookToRemove());
         model.addAttribute("bookToFilter", new BookToFilter());
         model.addAttribute("bookList", stream.collect(Collectors.toList()));
-        model.addAttribute("files", fileStorage.getAllFiles());
+        model.addAttribute("files", fileRepository.getAllFiles());
 
         return "book_shelf";
     }
@@ -89,7 +89,7 @@ public class BookShelfController {
             model.addAttribute("bookToRemove", new BookToRemove());
             model.addAttribute("bookToFilter", new BookToFilter());
             model.addAttribute("bookList", bookService.getAllBooks());
-            model.addAttribute("files", fileStorage.getAllFiles());
+            model.addAttribute("files", fileRepository.getAllFiles());
 
             return "book_shelf";
         }
@@ -108,7 +108,7 @@ public class BookShelfController {
             model.addAttribute("book", new Book());
             model.addAttribute("bookToFilter", new BookToFilter());
             model.addAttribute("bookList", bookService.getAllBooks());
-            model.addAttribute("files", fileStorage.getAllFiles());
+            model.addAttribute("files", fileRepository.getAllFiles());
 
             return "book_shelf";
         }
@@ -131,7 +131,7 @@ public class BookShelfController {
             return "redirect:/books/shelf";
         }
 
-        fileStorage.uploadFile(file);
+        fileRepository.uploadFile(file);
 
         return "redirect:/books/shelf";
     }
@@ -140,7 +140,7 @@ public class BookShelfController {
     public ResponseEntity<Resource> downloadFile(@RequestParam(value = "name") String name)
         throws MalformedURLException {
 
-        Resource file = fileStorage.loadFile(name);
+        Resource file = fileRepository.loadFile(name);
 
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")

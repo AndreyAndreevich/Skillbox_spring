@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class FileStorage {
+public class FileRepository {
 
-    private final Logger logger = Logger.getLogger(FileStorage.class);
+    private final Logger logger = Logger.getLogger(FileRepository.class);
     private final File storageDir;
 
     @Autowired
-    FileStorage() {
+    FileRepository() {
         String rootPath = System.getProperty("catalina.home");
         storageDir = new File(rootPath + File.separator + "external_uploads");
         if (!storageDir.exists()) {

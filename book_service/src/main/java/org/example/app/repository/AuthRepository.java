@@ -1,4 +1,4 @@
-package org.example.app.services;
+package org.example.app.repository;
 
 public interface AuthRepository<T> {
     boolean authenticate(T user);
