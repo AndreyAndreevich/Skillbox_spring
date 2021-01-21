@@ -91,6 +91,19 @@
         </table>
     </form>
 
+
+    <table id="files">
+        <thead>
+        <tr>
+            <th>filename</th>
+        </tr>
+        </thead>
+
+        <tr th:each="file: ${files}">
+            <td><a th:href="@{|/books/download?name=${file.name}|}" th:text="${file.name}"/></td>
+        </tr>
+    </table>
+
     <table id="books">
         <thead>
         <tr>

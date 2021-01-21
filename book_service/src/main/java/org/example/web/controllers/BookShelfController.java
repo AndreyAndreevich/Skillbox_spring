@@ -1,8 +1,6 @@
 package org.example.web.controllers;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -11,11 +9,15 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.example.app.services.BookService;
+import org.example.app.services.FileStorage;
 import org.example.web.dto.Book;
 import org.example.web.dto.BookToFilter;
 import org.example.web.dto.BookToRemove;
 import org.example.web.validation.SaveGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,10 +34,12 @@ public class BookShelfController {
 
     private final Logger logger = Logger.getLogger(BookShelfController.class);
     private final BookService bookService;
+    private final FileStorage fileStorage;
 
     @Autowired
-    public BookShelfController(BookService bookService) {
+    public BookShelfController(BookService bookService, FileStorage fileStorage) {
         this.bookService = bookService;
+        this.fileStorage = fileStorage;
     }
 
     @GetMapping("/shelf")
@@ -46,6 +50,7 @@ public class BookShelfController {
             model.addAttribute("book", new Book());
             model.addAttribute("bookToRemove", new BookToRemove());
             model.addAttribute("bookList", bookService.getAllBooks());
+            model.addAttribute("files", fileStorage.getAllFiles());
 
             return "book_shelf";
         }
@@ -71,6 +76,7 @@ public class BookShelfController {
         model.addAttribute("bookToRemove", new BookToRemove());
         model.addAttribute("bookToFilter", new BookToFilter());
         model.addAttribute("bookList", stream.collect(Collectors.toList()));
+        model.addAttribute("files", fileStorage.getAllFiles());
 
         return "book_shelf";
     }
@@ -83,6 +89,7 @@ public class BookShelfController {
             model.addAttribute("bookToRemove", new BookToRemove());
             model.addAttribute("bookToFilter", new BookToFilter());
             model.addAttribute("bookList", bookService.getAllBooks());
+            model.addAttribute("files", fileStorage.getAllFiles());
 
             return "book_shelf";
         }
@@ -101,6 +108,7 @@ public class BookShelfController {
             model.addAttribute("book", new Book());
             model.addAttribute("bookToFilter", new BookToFilter());
             model.addAttribute("bookList", bookService.getAllBooks());
+            model.addAttribute("files", fileStorage.getAllFiles());
 
             return "book_shelf";
         }
@@ -116,31 +124,26 @@ public class BookShelfController {
     }
 
     @PostMapping("/uploadFile")
-    public String uploadFile(@RequestParam("file") @Valid MultipartFile file) throws Exception {
+    public String uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
 
         if (file.getOriginalFilename().isEmpty()) {
             logger.warn("file is empty");
             return "redirect:/books/shelf";
         }
 
-        logger.info("new file: " + file.getOriginalFilename());
-
-        String name = file.getOriginalFilename();
-        byte[] bytes = file.getBytes();
-
-        String rootPath = System.getProperty("catalina.home");
-        File dir = new File(rootPath + File.separator + "external_uploads");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
-        BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-        stream.write(bytes);
-        stream.close();
-
-        logger.info("new file saved at: " + serverFile.getAbsolutePath());
+        fileStorage.uploadFile(file);
 
         return "redirect:/books/shelf";
+    }
+
+    @GetMapping(value = "/download")
+    public ResponseEntity<Resource> downloadFile(@RequestParam(value = "name") String name)
+        throws MalformedURLException {
+
+        Resource file = fileStorage.loadFile(name);
+
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+            .body(file);
     }
 }
