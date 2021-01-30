@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class BookService {
 
     private final JdbcTemplate jdbcTemplate;
+    String query = "SELECT b.*, a.name FROM books b INNER JOIN authors a ON b.authorid = a.id";
 
     @Autowired
     public BookService(JdbcTemplate jdbcTemplate) {
@@ -19,10 +20,14 @@ public class BookService {
     }
 
     public List<Book> getBooksData() {
-        List<Book> books = jdbcTemplate.query("SELECT * from books", (ResultSet rs, int rowNum) -> {
+        List<Book> books = jdbcTemplate.query(query, (ResultSet rs, int rowNum) -> {
+            Author author = new Author();
+            author.setId(rs.getInt("authorId"));
+            author.setName(rs.getString("name"));
+
             Book book = new Book();
             book.setId(rs.getInt("id"));
-            book.setAuthor(rs.getString("author"));
+            book.setAuthor(author);
             book.setTitle(rs.getString("title"));
             book.setPriceOld(rs.getString("priceOld"));
             book.setPrice(rs.getString("price"));
