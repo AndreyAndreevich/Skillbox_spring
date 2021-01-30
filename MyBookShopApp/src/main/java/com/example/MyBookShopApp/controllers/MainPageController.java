@@ -23,14 +23,4 @@ public class MainPageController {
         model.addAttribute("bookData", bookService.getBooksData());
         return "index";
     }
-
-    @GetMapping("/genres")
-    public String genres() {
-        return "genres/index";
-    }
-
-    @GetMapping("/genres/slug")
-    public String genresSlug() {
-        return "genres/slug";
-    }
 }
