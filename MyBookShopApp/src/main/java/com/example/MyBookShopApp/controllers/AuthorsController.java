@@ -29,4 +29,9 @@ public class AuthorsController {
     public String authorsPage(){
         return "/authors/index";
     }
+
+    @GetMapping("/authors/slug")
+    public String slugPage(){
+        return "/authors/slug";
+    }
 }

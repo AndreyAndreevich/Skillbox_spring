@@ -32,4 +32,19 @@ public class MainPageController {
     public String mainPage(){
         return "index";
     }
+
+    @GetMapping("/postponed")
+    public String postponedPage(){
+        return "postponed";
+    }
+
+    @GetMapping("/cart")
+    public String cartPage(){
+        return "cart";
+    }
+
+    @GetMapping("/signin")
+    public String signinPage(){
+        return "signin";
+    }
 }

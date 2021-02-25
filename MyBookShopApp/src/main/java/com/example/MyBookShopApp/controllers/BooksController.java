@@ -1,27 +1,30 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/books")
 public class BooksController {
 
-    private final AuthorService authorService;
-
     @Autowired
-    public BooksController(AuthorService authorService) {
-        this.authorService = authorService;
+    public BooksController() {
     }
 
-    @GetMapping("/books/popular")
-    public String popularPage(){
+    @GetMapping("/popular")
+    public String popularPage() {
         return "/books/popular";
     }
 
-    @GetMapping("/books/recent")
-    public String recentPage(){
+    @GetMapping("/recent")
+    public String recentPage() {
         return "/books/recent";
+    }
+
+    @GetMapping("/author")
+    public String authorPage() {
+        return "/books/author";
     }
 }

@@ -1,22 +1,25 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/genres")
 public class GenresController {
 
-    private final AuthorService authorService;
-
     @Autowired
-    public GenresController(AuthorService authorService) {
-        this.authorService = authorService;
+    public GenresController() {
     }
 
-    @GetMapping("/genres")
+    @GetMapping()
     public String genresPage() {
         return "/genres/index";
+    }
+
+    @GetMapping("/slug")
+    public String slugPage() {
+        return "/genres/slug";
     }
 }
