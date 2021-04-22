@@ -1,48 +1,33 @@
 package com.example.MyBookShopApp.data;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
 public class AuthorService {
 
-    private final JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public AuthorService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Author> getAuthors() {
-        List<Author> authors = jdbcTemplate.query("SELECT * from authors", (ResultSet rs, int rowNum) -> {
-            Author author = new Author();
+    public Map<String, List<com.example.MyBookShopApp.data.Author>> getAuthorsMap() {
+        List<com.example.MyBookShopApp.data.Author> authors = jdbcTemplate.query("SELECT * FROM authors",(ResultSet rs, int rowNum) -> {
+            com.example.MyBookShopApp.data.Author author = new com.example.MyBookShopApp.data.Author();
             author.setId(rs.getInt("id"));
-            author.setName(rs.getString("name"));
-            author.setBiography(rs.getString("biography"));
-
+            author.setFirstName(rs.getString("first_name"));
+            author.setLastName(rs.getString("last_name"));
             return author;
         });
 
-        return new ArrayList<>(authors);
-    }
-
-    public Map<Character, List<Author>> getAuthorsByFirstLetter() {
-        return getAuthors().stream().collect(Collectors.toMap(
-            author -> Character.toUpperCase(author.getName().charAt(0)),
-            author -> new ArrayList<>(List.of(author)),
-            (oldValue, newValue) -> {
-                ArrayList<Author> oldAuthorList = (ArrayList<Author>) oldValue;
-                ArrayList<Author> newAuthorList = (ArrayList<Author>) newValue;
-                oldAuthorList.addAll(newAuthorList);
-                return oldAuthorList;
-            }
-        ));
+        return authors.stream().collect(Collectors.groupingBy((Author a) -> {return a.getLastName().substring(0,1);}));
     }
 }

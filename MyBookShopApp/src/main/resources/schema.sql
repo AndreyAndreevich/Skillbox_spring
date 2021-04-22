@@ -1,19 +1,19 @@
-DROP TABLE IF EXISTS authors;
+DROP TABLE if EXISTS authors;
+DROP TABLE if EXISTS books;
 
-CREATE TABLE authors(
-id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(250) NOT NULL,
-biography CLOB DEFAULT NULL
+CREATE TABLE authors
+(
+    id         BIGSERIAL PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name  VARCHAR(50)
 );
 
-DROP TABLE IF EXISTS books;
-
-CREATE TABLE  books(
-id INT AUTO_INCREMENT PRIMARY KEY,
-authorId INT,
-title VARCHAR(250) NOT NULL,
-priceOld  VARCHAR(250) DEFAULT NULL,
-price VARCHAR(250) DEFAULT NULL,
-
-FOREIGN KEY (authorId) REFERENCES authors (id)
+CREATE TABLE books
+(
+    id        BIGSERIAL PRIMARY KEY,
+    title     VARCHAR(250) NOT NULL,
+    price_old VARCHAR(250) DEFAULT NULL,
+    price     VARCHAR(250) DEFAULT NULL,
+    author_id BIGSERIAL,
+    FOREIGN KEY (author_id) REFERENCES authors (id)
 );
