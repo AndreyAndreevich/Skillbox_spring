@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/books")
 public class BooksController {
-
-    @Autowired
-    public BooksController() {
-    }
-
     @GetMapping("/popular")
     public String popularPage() {
         return "/books/popular";
