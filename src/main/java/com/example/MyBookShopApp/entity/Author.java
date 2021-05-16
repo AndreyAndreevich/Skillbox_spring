@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.entity;
 
 import java.util.ArrayList;
 import java.util.List;

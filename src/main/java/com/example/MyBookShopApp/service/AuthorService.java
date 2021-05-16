@@ -1,5 +1,6 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.service;
 
+import com.example.MyBookShopApp.entity.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,9 @@ public class AuthorService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Map<String, List<com.example.MyBookShopApp.data.Author>> getAuthorsMap() {
-        List<com.example.MyBookShopApp.data.Author> authors = jdbcTemplate.query("SELECT * FROM authors",(ResultSet rs, int rowNum) -> {
-            com.example.MyBookShopApp.data.Author author = new com.example.MyBookShopApp.data.Author();
+    public Map<String, List<Author>> getAuthorsMap() {
+        List<Author> authors = jdbcTemplate.query("SELECT * FROM authors",(ResultSet rs, int rowNum) -> {
+            Author author = new Author();
             author.setId(rs.getInt("id"));
             author.setFirstName(rs.getString("first_name"));
             author.setLastName(rs.getString("last_name"));

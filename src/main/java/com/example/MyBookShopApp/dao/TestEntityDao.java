@@ -1,5 +1,6 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.dao;
 
+import com.example.MyBookShopApp.entity.TestEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository

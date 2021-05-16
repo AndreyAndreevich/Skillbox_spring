@@ -2,9 +2,9 @@ package com.example.MyBookShopApp.config;
 
 import java.util.logging.Logger;
 
-import com.example.MyBookShopApp.data.BookRepository;
-import com.example.MyBookShopApp.data.TestEntity;
-import com.example.MyBookShopApp.data.TestEntityCrudRepository;
+import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.entity.TestEntity;
+import com.example.MyBookShopApp.repository.TestEntityCrudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +45,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
             throw new NullPointerException();
         }
 
-        deleteTesEntityById(4L);
+//        deleteTesEntityById(4L);
 
         Logger.getLogger(CommandLineRunnerImpl.class.getSimpleName())
             .info(bookRepository.findBooksByAuthor_FirstName("Jelene").toString());
