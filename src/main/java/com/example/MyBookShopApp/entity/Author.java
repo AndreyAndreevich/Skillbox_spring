@@ -19,9 +19,18 @@ public class Author {
     private Integer id;
     private String firstName;
     private String lastName;
+    private String biography;
 
     @OneToMany(mappedBy = "author")
     private List<Book> bookList = new ArrayList<>();
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
 
     public List<Book> getBookList() {
         return bookList;

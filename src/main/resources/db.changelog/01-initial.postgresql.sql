@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS authors
 (
     id         BIGSERIAL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
-    last_name  VARCHAR(50) NOT NULL
+    last_name  VARCHAR(50) NOT NULL,
+    biography  TEXT
 );
 
 CREATE TABLE IF NOT EXISTS books
