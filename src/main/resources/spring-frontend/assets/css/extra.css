@@ -1403,7 +1403,7 @@
   width: 84px;
   height: 84px;
   border-radius: 100px;
-  background: #e2f1d7 url("assets/img/icons/login.svg") center center no-repeat;
+  background: #e2f1d7 url("../img/icons/login.svg") center center no-repeat;
 }
 .Comment-rating {
   display: inline-block;
@@ -2199,7 +2199,7 @@
 .Middle-top {
   padding: 20px 0 20px;
   margin-bottom: 20px;
-  background: #6db33f url("assets/img/bg/books.png") left center repeat-x;
+  background: #6db33f url("../img/bg/books.png") left center repeat-x;
   min-height: 130px;
   display: flex;
   align-items: center;
@@ -2227,7 +2227,7 @@
   position: absolute;
   content: '';
   display: block;
-  background: url("assets/img/bg/entry.jpg") center center no-repeat;
+  background: url("../img/bg/entry.jpg") center center no-repeat;
   background-size: cover;
   left: 0;
   right: 0;
@@ -2238,7 +2238,7 @@
 }
 @media screen and (max-width: 480px) {
   .Middle_form:after {
-    background: url("assets/img/bg/entry_phone.jpg") center center no-repeat;
+    background: url("../img/bg/entry_phone.jpg") center center no-repeat;
   }
 }
 .Middle_form:before {
@@ -3783,7 +3783,7 @@ img {
   border: none;
   border-radius: 100px;
   outline: none;
-  background: url("assets/img/icons/arrowRightSlider.svg") center center no-repeat;
+  background: url("../img/icons/arrowRightSlider.svg") center center no-repeat;
   width: 52px;
   height: 52px;
   z-index: 50;
