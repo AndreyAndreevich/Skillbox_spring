@@ -18,30 +18,3 @@ CREATE TABLE IF NOT EXISTS books
     review      TEXT,
     description TEXT
 );
-
-CREATE TABLE IF NOT EXISTS tags
-(
-    id   BIGSERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS tags_ref
-(
-    id      BIGSERIAL PRIMARY KEY,
-    book_id BIGINT NOT NULL,
-    tag_id  BIGINT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS customers
-(
-    id   BIGSERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS accounts
-(
-    id       BIGSERIAL PRIMARY KEY,
-    login    VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    email    VARCHAR(50) NOT NULL
-);

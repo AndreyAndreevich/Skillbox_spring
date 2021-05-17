@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS tags
+(
+    id   BIGSERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tags_ref
+(
+    id      BIGSERIAL PRIMARY KEY,
+    book_id BIGINT NOT NULL,
+    tag_id  BIGINT NOT NULL
+);
