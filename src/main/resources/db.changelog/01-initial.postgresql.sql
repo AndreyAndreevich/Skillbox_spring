@@ -8,13 +8,14 @@ CREATE TABLE IF NOT EXISTS authors
 
 CREATE TABLE IF NOT EXISTS books
 (
-    id          BIGSERIAL PRIMARY KEY,
-    name        VARCHAR(250)          DEFAULT NULL,
-    price       VARCHAR(250)          DEFAULT NULL,
-    price_old   VARCHAR(250)          DEFAULT NULL,
-    title       VARCHAR(250) NOT NULL,
-    author_id   BIGINT       NOT NULL,
-    rating      FLOAT        NOT NULL DEFAULT 0,
-    review      TEXT,
-    description TEXT
+    id            BIGSERIAL PRIMARY KEY,
+    pub_date      DATE         NOT NULL,
+    is_bestseller SMALLINT     NOT NULL,
+    slug          VARCHAR(250) NOT NULL,
+    title         VARCHAR(250) NOT NULL,
+    image         VARCHAR(250) NOT NULL,
+    description   TEXT,
+    price         INTEGER      NOT NULL,
+    discount      FLOAT        NOT NULL,
+    author_id     BIGINT       NOT NULL
 );
