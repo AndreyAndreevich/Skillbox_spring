@@ -1,13 +1,13 @@
 package com.example.MyBookShopApp.controllers;
 
+import java.util.List;
+
 import com.example.MyBookShopApp.entity.Book;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import java.util.List;
 
 @Controller
 public class MainPageController {
@@ -20,27 +20,27 @@ public class MainPageController {
     }
 
     @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks(){
+    public List<Book> recommendedBooks() {
         return bookService.getBooksData();
     }
 
     @GetMapping("/")
-    public String mainPage(){
+    public String mainPage() {
         return "index";
     }
 
     @GetMapping("/postponed")
-    public String postponedPage(){
+    public String postponedPage() {
         return "postponed";
     }
 
     @GetMapping("/cart")
-    public String cartPage(){
+    public String cartPage() {
         return "cart";
     }
 
     @GetMapping("/signin")
-    public String signinPage(){
+    public String signinPage() {
         return "signin";
     }
 }

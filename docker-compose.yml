@@ -1,0 +1,11 @@
+version: '3'
+services:
+  database:
+    image: postgres
+    container_name: skillbox_database
+    ports:
+    - '5432:5432'
+    environment:
+      POSTGRES_DB: skillbox
+      POSTGRES_USER: skillbox
+      POSTGRES_PASSWORD: skillbox
