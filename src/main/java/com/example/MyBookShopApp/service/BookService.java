@@ -5,6 +5,9 @@ import java.util.List;
 import com.example.MyBookShopApp.entity.Book;
 import com.example.MyBookShopApp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,5 +46,10 @@ public class BookService {
 
     public List<Book> getBooksWithMaxDiscount() {
         return bookRepository.getBooksWithMaxDiscount();
+    }
+
+    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAll(nextPage);
     }
 }

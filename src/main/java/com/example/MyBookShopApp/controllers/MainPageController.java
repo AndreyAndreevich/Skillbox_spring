@@ -21,7 +21,7 @@ public class MainPageController {
 
     @ModelAttribute("recommendedBooks")
     public List<Book> recommendedBooks() {
-        return bookService.getBooksData();
+        return bookService.getPageOfRecommendedBooks(0 ,6).getContent();
     }
 
     @GetMapping("/")
