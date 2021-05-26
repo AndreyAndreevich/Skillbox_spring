@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.RecommendedBooksPageDto;
+import com.example.MyBookShopApp.data.BooksPageDto;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,10 +37,10 @@ public class BooksController {
 
     @GetMapping("recommended")
     @ResponseBody
-    public RecommendedBooksPageDto getBooksPage(
+    public BooksPageDto getBooksPage(
         @RequestParam("offset") Integer offset,
         @RequestParam("limit") Integer limit
     ) {
-        return new RecommendedBooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
+        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
 }

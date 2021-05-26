@@ -3,6 +3,8 @@ package com.example.MyBookShopApp.repository;
 import java.util.List;
 
 import com.example.MyBookShopApp.entity.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -26,4 +28,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
+
+    Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 }
